@@ -18,6 +18,11 @@ UPLOAD_FOLDER = './uploads_cnn'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 labels1 = {'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6, 'H': 7, 'I': 8, 'J': 9, 'K': 10, 'L': 11, 'M': 12, 'N': 13, 'O': 14, 'P': 15, 'Q': 16, 'R': 17, 'S': 18, 'T': 19, 'U': 20, 'V': 21, 'W': 22, 'X': 23, 'Y': 24, 'Z': 25, 'del': 26, 'nothing': 27, 'space': 28,'s':29}
 
+def resizeImage(filepath,size):
+    img_array = cv2.imread(filepath)
+    new_array = cv2.resize(img_array, (size, size))
+    cv2.imwrite(filepath, new_array)
+
 
 def predictImage(imagePath,model,labels):
   np_image = Image.open(imagePath)
@@ -51,9 +56,8 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join('uploads_cnn/', filename))
+            resizeImage('uploads_cnn/'+filename,224)
 
-
-            
             model_mobilenet = tf.keras.models.load_model('saved_model7/MobileNet')
 
 
