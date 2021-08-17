@@ -1,4 +1,4 @@
-# covid19
+# ASL american sign language Detection
 
 ## Dataset
 
